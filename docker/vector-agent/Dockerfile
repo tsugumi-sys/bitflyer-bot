@@ -1,0 +1,1 @@
+FROM timberio/vector:0.20.0-debian

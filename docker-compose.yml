@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  bot:
+    build: docker/bot
+    volumes:
+      - ./bitflyer-ws-trade:/app
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://0.0.0.0:514"
+    entrypoint: /tmp/entrypoint.sh
+    command: /bin/sh
+    tty: true
+    cpus: 4
+
+  vector-agent:
+    build: docker/vector-agent
+    ports:
+      - 514:514/tcp
+    volumes:
+      - ./docker/vector-agent/vector.toml:/etc/vector/vector.toml:ro
+
+  prometheus:
+    build: docker/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    
+    

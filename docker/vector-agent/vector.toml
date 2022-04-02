@@ -1,0 +1,11 @@
+[sources.syslog_from_bot_container]
+type = "syslog"
+address = "0.0.0.0:514"
+max_length = 102_400
+mode = "tcp"
+
+[sinks.console]
+type = "console"
+inputs = [ "syslog_from_bot_container" ]
+target = "stdout"
+encoding = "json"
